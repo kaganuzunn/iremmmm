@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi Ki Doğmuşsun biricik sevgilim! 🎉💖</title>
+    <!-- Tailwind CSS ve FontAwesome ikonları -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Comfortaa:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6, #ffc3a0);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphic Kartlar */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 32px 0 rgba(254, 110, 137, 0.2);
+        }
+
+        /* Polaroid Fotoğraf Efekti */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 24px 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: rotate(-3deg);
+            transition: all 0.3s ease;
+        }
+        .polaroid:hover {
+            transform: rotate(2deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(254, 110, 137, 0.3);
+        }
+
+        /* Kalp Animasyonları */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 50;
+            animation: floatUp 6s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(100px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hediye Kutusu Pulsing */
+        .gift-pulse {
+            animation: pulseGift 1.5s infinite;
+        }
+
+        @keyframes pulseGift {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .handwritten {
+            font-family: 'Caveat', cursive;
+        }
+        
+        .romantic-title {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+<!-- ŞİFRE EKRANI -->
+<div id="login-screen" class="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
+
+    <h1 class="text-white text-4xl font-bold mb-6">
+        Şifre Gir ❤️
+    </h1>
+
+    <input 
+        type="password"
+        id="password"
+        placeholder="Şifre"
+        class="px-6 py-4 rounded-xl text-black text-lg outline-none"
+    >
+
+    <button 
+        onclick="checkPassword()"
+        class="mt-5 px-8 py-4 bg-pink-500 hover:bg-pink-600 rounded-xl text-white font-bold text-lg"
+    >
+        Giriş Yap
+    </button>
+
+</div>
+  
+
+
+    <!-- AŞAMA 1: GİRİŞ EKRANI (HEDİYE KUTUSU) -->
+    <div id="welcome-screen" style="display:none;" class="z-50 fixed inset-0 flex flex-col items-center justify-center bg-rose-100 transition-all duration-1000">
+        <div class="text-center p-8 max-w-md">
+            <h2 class="romantic-title text-3xl font-bold text-rose-600 mb-6">Senin için...</h2>
+            <p class="text-gray-600 mb-8 font-light">Kutunun içinde sana özel hazırlanmış tatlı bir şeyler saklı.</p>
+            
+            <button onclick="openSurprise()" class="gift-pulse bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold rounded-full p-8 shadow-2xl transition duration-300 focus:outline-none focus:ring-4 focus:ring-rose-300">
+                <i class="fa-solid fa-gift text-6xl"></i>
+                <span class="block text-sm mt-3 tracking-wider font-bold">HEDİYEYİ AÇ 🎁</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Müzik Durumu Paneli -->
+    <div id="music-control" class="hidden fixed bottom-6 right-6 z-40">
+        <button onclick="toggleMusic()" class="bg-white/80 backdrop-blur text-rose-600 w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-rose-50 transition duration-300">
+            <i id="music-icon" class="fa-solid fa-music text-lg animate-bounce"></i>
+        </button>
+    </div>
+
+    <!-- AŞAMA 2: ANA DOĞUM GÜNÜ SİTESİ -->
+    <div id="main-site" class="hidden opacity-0 max-w-4xl w-full mx-auto my-12 transition-opacity duration-1000">
+        
+        <!-- Üst Başlık ve Kutlama Alanı -->
+        <header class="text-center mb-12">
+            <span class="text-rose-600 font-bold tracking-widest text-sm uppercase bg-rose-200/50 px-4 py-1.5 rounded-full inline-block mb-4">Mutlu Yıllar! 🎉</span>
+            <h1 class="romantic-title text-4xl sm:text-6xl font-bold text-rose-700 leading-tight">İyi Ki Doğmuşsun Biricik Sevgilim! ✨</h1>
+            <p class="text-gray-700 mt-4 text-lg font-light max-w-xl mx-auto"> Sana baktığımda aslında hangi hâlini gördüğümü senin de görmeni istedim. Hayatıma kattığın tüm güzellikler için teşekkür ederim, doğum günün kutlu olsun bebeğimmm. 💕</p>
+        </header>
+
+        <!-- Video Alanı -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 mb-12">
+            <h3 class="romantic-title text-2xl font-bold text-rose-700 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-play-circle text-rose-500"></i> 
+            </h3>
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-md">
+                
+<iframe 
+    width="560" 
+    height="315" 
+    src="https://streamable.com/o/v8ii9b" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+</iframe>
+            </div>
+            <p class="text-gray-600 mt-4 text-sm italic text-center"></p>
+        </section>
+
+        <!-- Çift Kolonlu Detay Bölümü: Mektup ve Fotoğraflar -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            
+            <!-- Özel Mektup -->
+            <section class="glass-card rounded-3xl p-8 flex flex-col justify-between">
+                <div>
+                    <h3 class="romantic-title text-2xl font-bold text-rose-700 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope-open-text text-rose-500"></i> 
+                    </h3>
+                    <div class="handwritten text-2xl text-gray-800 leading-relaxed mb-6">
+                        "Yanımda olduğun, yüzümü güldürdüğün ve hayatı daha yaşanabilir kıldığın için kendimi şanslı hissediyorum. Umarım yeni yaşında ve bundan sonra hayat hep istediğin gibi olur, beraber sağlıklı nice yaşlarına... Seni çok seviyorum."
+                    </div>
+                </div>
+                <div class="border-t border-rose-200/60 pt-4 flex justify-between items-center">
+                    <span class="font-semibold text-rose-600"></span>
+                    <span class="handwritten text-3xl font-bold text-rose-700">❤️</span>
+                </div>
+            </section>
+
+            <!-- Fotoğraf Galerisi -->
+            <section class="glass-card rounded-3xl p-8 flex flex-col justify-between">
+                <div>
+                    <h3 class="romantic-title text-2xl font-bold text-rose-700 mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-camera-retro text-rose-500"></i> 
+                    </h3>
+                    
+                    <div class="flex justify-center items-center gap-6 my-4">
+                        <div class="polaroid w-40">
+                            <img src="https://i.hizliresim.com/5m0atrv.png" class="w-full h-32 object-cover rounded mb-2" alt="Anı 1">
+                            <span class="handwritten text-lg block text-center text-rose-600"></span>
+                        </div>
+                        <div class="polaroid w-40" style="transform: rotate(4deg);">
+                            <img src="https://i.hizliresim.com/fy38xoi.png" class="w-full h-32 object-cover rounded mb-2" alt="Anı 2">
+                            <span class="handwritten text-lg block text-center text-rose-600"></span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-center text-gray-500 italic mt-4">
+            </section>
+
+        </div>
+
+        <!-- Alt Bilgi Kutusu -->
+        <footer class="text-center pb-12">
+            <p class="text-rose-600/80 font-semibold mb-2 text-sm">🎉 İyi ki doğdun, iyi ki varsın! 🎉</p>
+            <div class="flex justify-center gap-4 text-rose-500 text-lg">
+                <i class="fa-solid fa-cake-candles animate-bounce"></i>
+                <i class="fa-solid fa-heart animate-pulse text-red-500"></i>
+                <i class="fa-solid fa-wand-magic-sparkles animate-bounce"></i>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Arkaplan Kalp Havuzu İçin Boş Kapsayıcı -->
+    <div id="heart-container" class="fixed inset-0 pointer-events-none z-10 overflow-hidden"></div>
+
+    <script>
+        // GELİŞMİŞ SAKİN PİYANO MOTORU (Web Audio API)
+        let audioCtx = null;
+        let isPlaying = false;
+        let melodyTimeout = null;
+        
+        // Çok daha slow (yavaş) ve duygusal bir ritim için süreler uzatıldı (dur: 1 = tam vuruş)
+        const notes = [
+            { note: "C4", dur: 0.8 }, { note: "C4", dur: 0.8 }, { note: "D4", dur: 1.6 }, { note: "C4", dur: 1.6 }, { note: "F4", dur: 1.6 }, { note: "E4", dur: 3.2 },
+            { note: "C4", dur: 0.8 }, { note: "C4", dur: 0.8 }, { note: "D4", dur: 1.6 }, { note: "C4", dur: 1.6 }, { note: "G4", dur: 1.6 }, { note: "F4", dur: 3.2 },
+            { note: "C4", dur: 0.8 }, { note: "C4", dur: 0.8 }, { note: "C5", dur: 1.6 }, { note: "A4", dur: 1.6 }, { note: "F4", dur: 1.6 }, { note: "E4", dur: 1.6 }, { note: "D4", dur: 3.2 },
+            { note: "A#4", dur: 0.8 }, { note: "A#4", dur: 0.8 }, { note: "A4", dur: 1.6 }, { note: "F4", dur: 1.6 }, { note: "G4", dur: 1.6 }, { note: "F4", dur: 4.5 }
+        ];
+
+        const freqs = {
+            "C4": 261.63, "D4": 293.66, "E4": 329.63, "F4": 349.23, "G4": 392.00, "A4": 440.00, "A#4": 466.16, "C5": 523.25
+        };
+
+        // Gerçekçi bir kuyruklu piyano (Grand Piano) tuşe simülasyonu
+        function playPianoTone(freq, duration, startTime) {
+            if (!audioCtx) return;
+            
+            // Ana Ses Dalgaları (Piyano harmonikleri için birden fazla dalga birleşimi)
+            let oscRich = audioCtx.createOscillator();
+            let oscSoft = audioCtx.createOscillator();
+            let gainNode = audioCtx.createGain();
+            
+            // Yankı (Reverb/Delay) efekti yaratmak için düğüm
+            let delayNode = audioCtx.createDelay();
+            let delayGain = audioCtx.createGain();
+
+            oscRich.connect(gainNode);
+            oscSoft.connect(gainNode);
+            
+            // Ses çıkışına bağla
+            gainNode.connect(audioCtx.destination);
+            
+            // Yankı hattını kur (Piyano kuyruğu hissi için)
+            gainNode.connect(delayNode);
+            delayNode.connect(delayGain);
+            delayGain.connect(audioCtx.destination);
+            
+            // Yumuşak ve zengin piyano tonu ayarları
+            oscRich.type = 'sine'; // Ana gövde sesi
+            oscRich.frequency.setValueAtTime(freq, startTime);
+            
+            oscSoft.type = 'triangle'; // Tuşun sertliğini azaltan sıcak üst ton
+            oscSoft.frequency.setValueAtTime(freq, startTime);
+
+            // Yankı süresi ve derinliği
+            delayNode.delayTime.setValueAtTime(0.4, startTime); 
+            delayGain.gain.setValueAtTime(0.04, startTime);
+
+            // ADSR (Giriş ve Sönümlenme) Eğrisi: Piyano tuşuna basılma anı hızı ve yavaşça sönüşü
+            gainNode.gain.setValueAtTime(0, startTime);
+            // Hızlı atak (Tuşa basılma anı parlaması)
+            gainNode.gain.linearRampToValueAtTime(0.22, startTime + 0.03); 
+            // Yavaş sönümlenme (Slow piyano pedalı basılıymış gibi yumuşak bitiş)
+            gainNode.gain.exponentialRampToValueAtTime(0.005, startTime + duration);
+            
+            oscRich.start(startTime);
+            oscSoft.start(startTime);
+            
+            oscRich.stop(startTime + duration);
+            oscSoft.stop(startTime + duration);
+        }
+
+        function playMelody() {
+            if (!isPlaying) return;
+            let now = audioCtx.currentTime;
+            let tempo = 0.8; // Şarkının genel yavaşlık katsayısı
+
+            notes.forEach(item => {
+                let freq = freqs[item.note];
+                let duration = item.dur * tempo;
+                playPianoTone(freq, duration, now);
+                now += duration;
+            });
+
+            // Şarkı döngüsü
+            melodyTimeout = setTimeout(playMelody, now * 1000 - audioCtx.currentTime * 1000 + 1500);
+        }
+
+        function initMusic() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            isPlaying = true;
+            document.getElementById('music-icon').className = "fa-solid fa-music text-lg animate-bounce text-rose-600";
+            playMelody();
+        }
+
+        function toggleMusic() {
+
+    if (isPlaying) {
+
+        isPlaying = false;
+
+        clearTimeout(melodyTimeout);
+
+        if (audioCtx) {
+            audioCtx.close();
+            audioCtx = null;
+        }
+
+        document.getElementById("music-icon").className =
+        "fa-solid fa-volume-xmark text-lg text-gray-400";
+
+    } 
+    
+    else {
+
+        initMusic();
+            }
+        }
+
+        // KALPLERİ ÜRETEN JAVASCRIPT MOTORU
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            if(!container) return;
+
+            const heart = document.createElement('i');
+            heart.classList.add('fa-solid', 'fa-heart', 'heart');
+            
+            const startX = Math.random() * 100;
+            const size = Math.random() * 20 + 15; 
+            const duration = Math.random() * 3 + 4; 
+            const delay = Math.random() * 2;
+
+            heart.style.left = `${startX}vw`;
+            heart.style.fontSize = `${size}px`;
+            heart.style.animationDuration = `${duration}s`;
+            heart.style.animationDelay = `${delay}s`;
+            
+            const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#ffb3c1', '#f15bb5', '#fee440'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        // Sürprizi Başlatan Ana Fonksiyon
+        function openSurprise() {
+            const welcome = document.getElementById('welcome-screen');
+            const main = document.getElementById('main-site');
+            const musicCtrl = document.getElementById('music-control');
+
+            welcome.classList.add('opacity-0', 'pointer-events-none', 'scale-110');
+            
+            setTimeout(() => {
+                welcome.classList.add('hidden');
+                main.classList.remove('hidden');
+                musicCtrl.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    main.classList.remove('opacity-0');
+                    main.classList.add('opacity-100');
+                }, 50);
+            }, 1000);
+
+            initMusic();
+            setInterval(createHeart, 350);
+        }
+    </script>
+  <script>
+
+function checkPassword() {
+
+    const enteredPassword =
+    document.getElementById("password").value.trim();
+
+    const realPassword = "123";
+
+    if (enteredPassword === realPassword) {
+
+        document.getElementById("login-screen").style.display = "none";
+
+        document.getElementById("welcome-screen").style.display = "flex";
+
+    }
+
+    else {
+
+        alert("Şifre yanlış!");
+
+    }
+
+}
+
+</script>
+</body>
+</html>
+
